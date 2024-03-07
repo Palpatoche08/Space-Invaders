@@ -8,6 +8,9 @@ TagManager:
   - Alien
   - EvilBullet
   - Barricade
+  - FrontAlien
+  - BackAlien
+  - BossAlien
   layers:
   - Default
   - TransparentFX

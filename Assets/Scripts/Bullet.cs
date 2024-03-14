@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
     public int bossLives = 5;
     private PlayerController playerController;
 
+    public AudioSource shootSound;
+
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(transform.up * Bullet_Forward_Force, ForceMode.Impulse);
@@ -23,19 +25,23 @@ public class Bullet : MonoBehaviour
         else if (collision.gameObject.CompareTag("FrontAlien"))
         {
             Destroy(collision.gameObject); 
-            Destroy(gameObject); 
+            Destroy(gameObject);
+            shootSound.Play(); 
             playerController.IncreaseScore(100); 
+
         }
         else if (collision.gameObject.CompareTag("Alien"))
         {
             Destroy(collision.gameObject); 
             Destroy(gameObject); 
-            playerController.IncreaseScore(200); 
+            playerController.IncreaseScore(200);
+            shootSound.Play(); 
         }
         else if (collision.gameObject.CompareTag("BackAlien"))
         {
             Destroy(collision.gameObject); 
-            Destroy(gameObject); 
+            Destroy(gameObject);
+            shootSound.Play(); 
             playerController.IncreaseScore(300); 
         }
         else if (collision.gameObject.CompareTag("BossAlien"))
@@ -46,6 +52,7 @@ public class Bullet : MonoBehaviour
                 playerController.IncreaseScore(1000); 
                 Destroy(collision.gameObject); 
             }
+            shootSound.Play();
 
             Destroy(gameObject); 
 

@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossAlien : MonoBehaviour
 {
     public int bossLives = 5;
+    public ParticleSystem deathParticles; 
     private PlayerController playerController;
 
     void Start()
@@ -17,7 +17,7 @@ public class BossAlien : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             HandleBulletHit();
-            Destroy(collision.gameObject); 
+            Destroy(collision.gameObject);
         }
     }
 
@@ -28,7 +28,15 @@ public class BossAlien : MonoBehaviour
         if (bossLives <= 0)
         {
             playerController.IncreaseScore(1000);
-            Destroy(gameObject); 
+            StartCoroutine(ExplodeAndDisable());
         }
+    }
+
+    IEnumerator ExplodeAndDisable()
+    {
+        deathParticles.Play();
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
+        deathParticles.gameObject.SetActive(false);
     }
 }

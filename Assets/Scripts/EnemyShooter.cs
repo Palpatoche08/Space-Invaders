@@ -8,6 +8,9 @@ public class EnemyShooter : MonoBehaviour
     public float shootInterval = 3f;
     public float evilBulletForce = 10f;
 
+
+
+
     void Start()
     {
         StartCoroutine(ShootEvilBullet());
@@ -19,6 +22,7 @@ public class EnemyShooter : MonoBehaviour
         {
             yield return new WaitForSeconds(shootInterval);
             SpawnEvilBullet();
+
         }
     }
 
@@ -31,7 +35,6 @@ public class EnemyShooter : MonoBehaviour
         Rigidbody temporaryRigidBody;
         temporaryRigidBody = temporaryBulletHandler.GetComponent<Rigidbody>();
         temporaryRigidBody.AddForce(Vector3.down * evilBulletForce, ForceMode.Impulse);
-
         StartCoroutine(EnableCollisions(temporaryBulletHandler.GetComponent<Collider>()));
 
         Destroy(temporaryBulletHandler, 3f);

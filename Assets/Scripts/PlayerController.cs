@@ -2,6 +2,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class PlayerController : MonoBehaviour
 
     public AudioSource fireSound;
 
+    public AudioSource deadSound;
+
+    public AudioSource finalDeathSound;
 
     public TextMeshProUGUI scoreCountText;
     private int scoreCount = 0;
@@ -26,6 +30,11 @@ public class PlayerController : MonoBehaviour
 
     private bool canShoot = true;
     public float shootingCooldown = 0.5f;
+
+    public GameObject deathParticlePrefab;
+
+    public Renderer playerRenderer;
+    
 
     void Start()
     {
@@ -54,9 +63,10 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ShootWithCooldown());
         }
 
-        if (scoreCount == 11000)
+        if (scoreCount == 10900)
         {
             Debug.Log("You win !");
+            StartCoroutine(ReturnToMainMenu());
         }
     }
 
@@ -115,12 +125,29 @@ public class PlayerController : MonoBehaviour
     public void LoseLife()
     {
         livesCount--;
+        livesCountText.text = "Lives: " + livesCount;
+        deadSound.Play();
         if (livesCount <= 0)
         {
+
             Debug.Log("You Lost!");
-            Time.timeScale = 0f;
+            finalDeathSound.Play();
+            playerRenderer.enabled = false;
+            Quaternion particleRotation = Quaternion.Euler(0f, 0f, 0f); 
+            Instantiate(deathParticlePrefab, transform.position, particleRotation);
+            StartCoroutine(ReturnToMainMenu());
+ 
         }
     }
+
+
+    IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene(0);
+    } 
+
 
     public int GetScore()
     {

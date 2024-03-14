@@ -6,11 +6,18 @@ public class EvilBullets : MonoBehaviour
 {
     public float Bullet_Forward_Force = 10f;
     private PlayerController playerController; 
-
+    
+    public AudioSource shootSound;
 
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(transform.up * Bullet_Forward_Force, ForceMode.Impulse);
+        
+        if (shootSound != null)
+        {
+            shootSound.Play();
+        }
+
 
         playerController = FindObjectOfType<PlayerController>();
     }
@@ -21,6 +28,7 @@ public class EvilBullets : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     IEnumerator EnableCollisions(Collider colliderToEnable)

@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c5213766aba85478b7e18d1c2d43be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bullet_Forward_Force: 20
+  shootSound: {fileID: 8271417511756524256, guid: 259aafa21feaf034abfa194bd6d6261a, type: 3}
 --- !u!54 &4582753224738014228
 Rigidbody:
   m_ObjectHideFlags: 0
